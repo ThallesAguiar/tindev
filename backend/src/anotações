@@ -1,0 +1,32 @@
+um controller não pode (por boas praticas), possuir mais do que os 5 metodos fundamentais,
+que são:
+ INDEX, SHOW, UPDATE, DELETE
+
+ INDEX: retorna uma lista do dado,
+ SHOW: Mostrar um unico dado,
+ STORE: cria/insere um novo dado,
+ UPDATE: atualiza,
+ DELETE: Excluir.
+
+
+//GET, POST, PUT, DELETE
+/**REQ traz toda a requisição do usuario 
+ * RES é a resposta que o servidor dará ao usuario
+*/ 
+
+ acessar parametros que vem através da ROTA, usa-se:
+ --->(req.params.userId)
+
+
+  /*faz 3 filtros. Vai buscar: 
+        O usuario que NÃO ta logado, o usuario que o logado ja DEU LIKE e DISLIKE */
+        const users = await userModel.find({
+           //'$' diz que vou aplicar um filtro em todas as minhas condições. ne: NOT EQUAL
+           pega os ID onde ele não seja igual ($ne) ao meu usuario logado
+            $and:[
+                { _id: {$ne: user} },
+                //pega os ID onde ele não esteja dentro($nin) de uma lista, que seria meu like/dislike
+                { _id: { $nin: usuarioLogado.likes } },
+                { _id: { $nin: usuarioLogado.dislikes } },
+            ]
+        })
